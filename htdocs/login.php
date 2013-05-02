@@ -27,7 +27,7 @@ if (UNDER_MAINTENANCE) {
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.ui-icons-colors.css"/>
     <link rel="stylesheet" type="text/css" href="css/jquery.pnotify.default.css"/>
     <link rel="stylesheet" type="text/css" href="css/jquery.pnotify.default.icons.css"/>
-    <title>Calidad de la Informaci&oacute;n | Acceso</title>
+    <title>Diplomado Base de Datos | Acceso</title>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="js/jquery.validate.min.js"></script>
@@ -40,15 +40,12 @@ if (UNDER_MAINTENANCE) {
     <div id="maincontainer">
         <!-- header -->
         <div id="header">
-            <img src="images/sys/infonavit.png" alt=""/>
-            <img src="images/sys/simpleLogo.png" alt=""/>
+            <img src="images/escudo-acatlan.jpg" alt=""/>
         </div>
         <!-- content -->
         <div id="content">
             <form id="waform_login" name="waform_login" method="post">
                 <div id="login_box">
-                    <div id="login_box_title">Franquicias | Ingreso</div>
-                    <br/>
                     <label for="username">Usuario</label>
                     <br/>
                     <input type="text" id="username" name="username"/>

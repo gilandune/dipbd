@@ -25,7 +25,7 @@ body input[type=text], body input[type=password] { border: 1px solid white; marg
 body textarea { border: 1px solid white;}
 
 div#header {
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 div#login_box {
@@ -55,7 +55,7 @@ div#login_box label.error {
 
 input.button {
     color: white;
-    background: #C00;
+    background: #0000AC;
     border: 0;
     font-size: 1.2em;
     /*text-shadow: 2px 2px 2px #ff6666;*/

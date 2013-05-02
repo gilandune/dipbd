@@ -1,0 +1,69 @@
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/../config/config.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/index.php:0
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/index.php:18
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   3. require_once() /var/www/sites/dipbd/htdocs/general.sys.inc.php:3
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/../config/config.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/index.php:0
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/index.php:18
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   3. require_once() /var/www/sites/dipbd/htdocs/general.sys.inc.php:3
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/../config/config.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/../config/config.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/favicon.ico
+[Thu May 02 15:06:21 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/favicon.ico
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/../config/config.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/index.php:0
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/index.php:18
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   3. require_once() /var/www/sites/dipbd/htdocs/general.sys.inc.php:3
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/../config/config.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/index.php:0
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/index.php:18
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   3. require_once() /var/www/sites/dipbd/htdocs/general.sys.inc.php:3
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/../config/config.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/../config/config.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 3
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:07:10 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/class/db.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 5
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/index.php:0
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/index.php:18
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   3. require_once() /var/www/sites/dipbd/htdocs/general.sys.inc.php:3
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/class/db.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 5
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/index.php:0
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/index.php:18
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   3. require_once() /var/www/sites/dipbd/htdocs/general.sys.inc.php:3
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/class/db.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 5
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/class/db.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 5
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:08:11 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP Warning:  require_once(/var/www/sites/dipbd/htdocs/class/sys_exception.inc.php): failed to open stream: No such file or directory in /var/www/sites/dipbd/htdocs/general.inc.php on line 6
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP Fatal error:  require_once(): Failed opening required '/var/www/sites/dipbd/htdocs/class/sys_exception.inc.php' (include_path='.:/usr/share/php:/usr/share/pear') in /var/www/sites/dipbd/htdocs/general.inc.php on line 6
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP Stack trace:
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP   1. {main}() /var/www/sites/dipbd/htdocs/login.php:0
+[Thu May 02 15:08:38 2013] [error] [client 127.0.0.1] PHP   2. require_once() /var/www/sites/dipbd/htdocs/login.php:11
+[Thu May 02 15:09:00 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/images, referer: http://dipbd.gil/login/
+[Thu May 02 15:09:00 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/images, referer: http://dipbd.gil/login/
+[Thu May 02 15:09:00 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/images
+[Thu May 02 15:09:00 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/images, referer: http://dipbd.gil/login/
+[Thu May 02 15:09:00 2013] [error] [client 127.0.0.1] File does not exist: /var/www/sites/dipbd/htdocs/images, referer: http://dipbd.gil/login/

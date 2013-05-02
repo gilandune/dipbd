@@ -31,7 +31,7 @@ if (UNDER_MAINTENANCE) {
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+        <base href="<?php echo BASE_URL; ?>" />
         <link rel="icon" href="images/sys/favicon.ico" sizes="16x16" type="image/ico" />
         <link rel="stylesheet" type="text/css" href="css/general.css"/>
         <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
@@ -45,7 +45,7 @@ if (UNDER_MAINTENANCE) {
         <link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css"/>
         <link rel="stylesheet" type="text/css" href="css/ui-progress-bar.css"/>
         <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css"/>
-        <title>Calidad de la Informaci&oacute;n</title>
+        <title>Diplomado Base de Datos</title>
         <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.slidePanel.min.js"></script>
