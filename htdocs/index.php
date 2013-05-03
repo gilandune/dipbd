@@ -109,6 +109,13 @@ $res2 = $db2->queryAll($sp2);
                                 </span>
                             </a>
                         </li>
+                        <li>
+                            <a href="#tabs-imagenes">
+                                <span class="adm_submenu_title">
+                                    Imagenes
+                                </span>
+                            </a>
+                        </li>
                     </ul>
 
                     <div id="tabs-ordenes">
@@ -264,6 +271,76 @@ $res2 = $db2->queryAll($sp2);
                         
                         </script>
                     </div>
+                    <div id="tabs-imagenes">
+                        <div id="accordion_img">
+                            <h3>Pregunta 1</h3>
+                            <div><img src="/images/Selection_001.png"></div>
+                            <h3>Pregunta 2</h3>
+                            <div>
+                                <img src="/images/Selection_002.png"><br />
+                                <img src="/images/Selection_003.png"><br />
+                                <img src="/images/Selection_004.png"><br />
+                            </div>
+                            <h3>Pregunta 3</h3>
+                            <div>
+                                <img src="/images/Selection_005.png">
+                                <img src="/images/Selection_006.png">
+                            </div>
+                            <h3>Pregunta 4</h3>
+                            <div>
+                                <img src="/images/Selection_007.png">
+                                <img src="/images/Selection_008.png">
+                                <img src="/images/Selection_009.png">
+                                <img src="/images/Selection_010.png">
+                                <img src="/images/Selection_011.png">
+                                <img src="/images/Selection_012.png">
+                                <img src="/images/Selection_013.png">
+                                <img src="/images/Selection_014.png">
+                            </div>
+                            <h3>Pregunta 5</h3>
+                            <div>
+                                <img src="/images/Selection_015.png">
+                                <img src="/images/Selection_016.png">
+                            </div>
+                            <h3>Pregunta 7</h3>
+                            <div>
+                                <p>El problema ocurre al seleccionar datos de la misma tabla sobre la que existe el trigger, no es posible realizar la  operacion pues el sistema no puede garantizar la consistencia de los datos
+                                    <br />Esto podria provocar inserciones con datos diferentes a lo planeado, o inclusive, en algunos casos causar un loop infinito
+                                    <br />La solucion se obtiene usando la tabla JOBS para obtener los salarios mínimo y máximo de un dado job_id
+                                </p>
+                            </div>
+                            <h3>Pregunta 8</h3>
+                            <div>
+                                <img src="/images/Selection_017.png">
+                                <img src="/images/Selection_018.png">
+                                <img src="/images/Selection_019.png">
+                            </div>
+                            <h3>Pregunta 9</h3>
+                            <div>
+                                <img src="/images/Selection_020.png">
+                                <img src="/images/Selection_021.png">
+                                <img src="/images/Selection_022.png">
+                            </div>
+                            <h3>Pregunta 7</h3>
+                            <div>
+                                <p>Mismo caso del ejercicio 8 (en el cual ya implementé y solucioné), cualquier tabla en la que se esté ejecutando un UPDATE, INSERT o DELETE está "mutando", es decir,
+                                    <br />sus datos están cambiando y oracle no puede garantizar la consistencia de los datos que se soliciten y, por lo tanto, bloquea
+                                    <br />las operaciones que intenten hacer referencia a ella.
+                                    <br />No se debe confundir con un MUTEX, que es la estructura usada para realizar este bloqueo. (al detectar un UPDATE, INSERT o DELETE
+                                    <br />el sistema "activa" el mutex correspondiente a los recursos que se van a modificar, impidiendo que otros procesos tengan acceso a ese recurso)
+                                </p>
+                            </div>                            
+                    </div>
+                    <script type="text/javascript">
+                            $(document).ready(function(){
+                                    $('#accordion_ev_ha').bind('accordionchange', function(event, ui) {
+                                    var index = $(this).find("h3").index ( ui.newHeader[0] );
+                                    //alert(index);
+
+                                });
+                            }
+                            );
+                     </script>    
                 </div>
             </div>
             <!-- footer -->

@@ -1,0 +1,294 @@
+-- 1 -- 1 -- 1 -- 1 -- 1
+
+declare
+NON_NUM exception;
+pragma exception_init(NON_NUM, -06502);
+v_field_Delimiter varchar2(10) := 'a';
+begin
+	begin
+		v_field_Delimiter := to_number(v_field_Delimiter);
+		exception
+		when NON_NUM then
+		-- dbms_output.put_line('Not a number');
+		RAISE;
+	end;
+-- continue processing
+	dbms_output.put_line('Is a number');
+	exception
+	WHEN NON_NUM THEN dbms_output.put_line('External Not a number');
+end;
+
+-- 2 -- 2 -- 2 -- 2 -- 2
+
+CREATE OR REPLACE PROCEDURE agrega_empleo (
+	v_job_id jobs.job_id%TYPE,
+	v_job_title jobs.job_title%TYPE
+)
+IS
+	v_job_exists INT;
+	e_job_exists EXCEPTION;
+BEGIN
+	
+	SELECT COUNT(DISTINCT job_id)
+	INTO v_job_exists
+	FROM jobs
+	WHERE job_id = v_job_id;
+	
+	IF v_job_exists <> 0 THEN
+		RAISE e_job_exists;
+	ELSE
+		INSERT INTO jobs
+			(job_id, job_title) 
+		VALUES (v_job_id, v_job_title);
+	END IF;
+	
+	EXCEPTION
+		WHEN e_job_exists THEN
+		DBMS_OUTPUT.PUT_LINE ('Empleo ya existe.');
+END;
+
+BEGIN
+agrega_empleo('IT_DBA','Database Administrator');
+END;
+BEGIN
+agrega_empleo('IT_DBA','Database Administrator');
+END;
+
+-- 3 -- 3 -- 3 -- 3 -- 3
+
+CREATE OR REPLACE FUNCTION obt_salanual_calc(
+	v_salario NUMBER,
+	v_comision NUMBER
+)
+RETURN NUMBER AS v_anual NUMBER(15,2);
+v_s NUMBER(10,2); v_c NUMBER(10,2);
+BEGIN
+
+IF v_salario IS NULL THEN v_s := 0;
+ELSE v_s := v_salario;
+END IF;
+IF v_comision IS NULL THEN v_c := 0;
+ELSE v_c := v_comision;
+END IF;
+
+v_anual := v_s*12 + v_s*v_c*12;
+
+RETURN v_anual;
+
+END;
+
+SELECT employee_id, obt_salanual_calc(salary,commission_pct) AS sa
+FROM employees
+WHERE department_id = 30;
+
+-- 4 -- 4 -- 4 -- 4 -- 4 -- 4 -- 4
+
+CREATE TABLE nuevo_empleado AS (
+	SELECT employee_id, last_name, salary, department_id, email, job_id, hire_date
+	FROM employees);
+	
+CREATE TABLE nuevo_departamento AS (
+	SELECT 	department_id, department_name, location_id
+	FROM departments);
+
+CREATE OR REPLACE VIEW detalles_empleado AS
+SELECT e.employee_id, e.last_name, e.salary, e.department_id, e.email, e.job_id, 
+	d.department_name, d.location_id
+FROM nuevo_empleado e
+INNER JOIN nuevo_departamento d ON d.department_id = e.department_id;
+
+	
+CREATE OR REPLACE TRIGGER nuevo_empleado_departamento
+INSTEAD OF INSERT ON detalles_empleado
+REFERENCING NEW AS n
+FOR EACH ROW
+DECLARE
+rowcnt number;
+BEGIN
+SELECT COUNT(*) INTO rowcnt FROM nuevo_departamento WHERE department_id = :n.department_id; 
+IF rowcnt = 0  THEN
+INSERT INTO nuevo_departamento (department_id, department_name, location_id) 
+VALUES (:n.department_id, :n.department_name, :n.location_id);
+ELSE
+UPDATE nuevo_departamento SET department_name = :n.department_name, location_id = :n.location_id
+WHERE department_id = :n.department_id;
+END IF; 
+SELECT COUNT(*) INTO rowcnt FROM nuevo_empleado WHERE employee_id = :n.employee_id;
+IF rowcnt = 0  THEN
+INSERT INTO nuevo_empleado (employee_id, last_name, salary, department_id, email, job_id) 
+VALUES (:n.employee_id, :n.last_name, :n.salary, :n.department_id, :n.email, :n.job_id);
+ELSE
+UPDATE nuevo_empleado SET last_name = :n.last_name, salary = :n.salary, department_id = :n.department_id, email = :n.email, job_id = :n.job_id
+WHERE employee_id = :n.employee_id;
+END IF;
+END;
+
+CREATE OR REPLACE TRIGGER borrar_empleado_departamento
+INSTEAD OF DELETE ON detalles_empleado
+FOR EACH ROW
+
+BEGIN
+
+	DELETE FROM nuevo_empleado WHERE employee_id = :OLD.employee_id;
+	DELETE FROM nuevo_departamento WHERE department_id = :OLD.department_id;
+	
+END;   
+
+DELETE FROM detalles_empleado WHERE employee_id = 206;
+
+-- 5-- 5-- 5-- 5-- 5-- 5-- 5-- 5-- 5-- 5
+CREATE OR REPLACE PROCEDURE top_sales (
+v_ini INT,
+v_fin INT
+)
+IS
+cnumber int;
+BEGIN
+dbms_output.put_line(CHR(9) || 'EmpNo' || CHR(9) || 'Name' || CHR(9) || 'Sales');
+FOR v_res IN (
+SELECT a.eno, a.ename, a.sales
+FROM (
+SELECT e.eno, e.ename, SUM(p.price*od.qty) AS sales, rank() over (order by SUM(p.price*od.qty) DESC) AS rnk FROM orders o
+INNER JOIN employees e ON e.eno = o.eno
+INNER JOIN odetails od ON od.ono = o.ono
+INNER JOIN parts p ON p.pno = od.pno
+GROUP BY e.eno, e.ename
+) a
+WHERE rnk BETWEEN v_ini AND v_fin
+ORDER BY a.sales DESC
+)
+LOOP
+dbms_output.put_line(CHR(9) || v_res.eno || CHR(9) || v_res.ename || CHR(9) || v_res.sales);
+END LOOP;
+END;
+
+BEGIN
+top_sales(1,3);
+END;
+
+----------------------------------
+
+----------------------------------
+
+-- 7 -- 7 -- 7 -- 7 -- 7 -- 7 -- 7 -- 7
+
+La pugna es cuando 2 transacciones esperan actuar sobre datos bloqueados por la otra, provocando que se detenga el procesamiento.
+Generalmente, el sistema en forma automatica, despues de un determinado tiempo de espera, hace rollback a una de las transacciones y continua con el procesamiento de la otra.
+El DBA debe analizar en donde y por qué ocurrió, y corregir la aplicación/procedimiento/función/etc correspondiente.
+
+--8 --8 --8 --8 --8 --8 --8 --8 --8 --8 
+
+-- El trigger del PDF nunca funcionó, propongo esta alternativa:
+
+CREATE OR REPLACE TRIGGER verify_salary
+BEFORE INSERT OR UPDATE OF salary, job_id ON EMPLOYEES
+FOR EACH ROW
+DECLARE
+minsal NUMBER(8,2);
+maxsal NUMBER(8,2);
+e_i_sal EXCEPTION;
+BEGIN
+SELECT MIN(SALARY),MAX(SALARY)
+INTO minsal,maxsal
+FROM EMPLOYEES
+WHERE JOB_ID=:NEW.JOB_ID;
+IF :NEW.salary < minsal OR :new.salary > maxsal THEN
+RAISE e_i_sal;
+END IF;
+EXCEPTION
+WHEN e_i_sal THEN
+DBMS_OUTPUT.PUT_LINE ('Salario fuera de rango.');
+END;
+
+-- El problema ocurre al seleccionar datos de la misma tabla sobre la que existe el trigger, no es posible realizar la  operacion pues el sistema no puede garantizar la consistencia de los datos
+-- Esto podria provocar inserciones con datos diferentes a lo planeado, o inclusive, en algunos casos causar un loop infinito
+-- La solucion se obtiene usando la tabla JOBS para obtener los salarios mínimo y máximo de un dado job_id
+
+CREATE OR REPLACE TRIGGER verify_salary
+BEFORE INSERT OR UPDATE OF salary, job_id ON EMPLOYEES
+FOR EACH ROW
+DECLARE
+minsal NUMBER(8,2);
+maxsal NUMBER(8,2);
+e_i_sal EXCEPTION;
+BEGIN
+SELECT min_salary,max_salary
+INTO minsal,maxsal
+FROM JOBS
+WHERE JOB_ID=:NEW.JOB_ID;
+IF :NEW.salary < minsal OR :new.salary > maxsal THEN
+RAISE e_i_sal;
+END IF;
+EXCEPTION
+WHEN e_i_sal THEN
+DBMS_OUTPUT.PUT_LINE ('Salario fuera de rango.');
+END;
+
+-- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 -- 9 
+
+CREATE OR REPLACE PACKAGE pac_cursos AS
+p_spots NUMBER;
+PROCEDURE get_course_spots(v_dname VARCHAR2);
+FUNCTION spots_filled (v_did NUMBER, v_cid VARCHAR2) 
+RETURN INT;
+END pac_cursos;
+
+CREATE OR REPLACE PACKAGE BODY pac_cursos AS
+PROCEDURE get_course_spots(v_dname VARCHAR2) IS
+did NUMBER;
+
+BEGIN
+
+SELECT DEPT_ID
+INTO did
+FROM dept_master
+WHERE dept_name LIKE v_dname;
+
+dbms_output.put_line(CHR(9) || 'Course' || CHR(9) || 'Students Allowed');
+FOR v_res IN (
+SELECT d.dept_id, c.course_id, c.course_name, s.MAX_STUD_ALLOW
+FROM COURSE_MASTER c
+INNER JOIN DEPT_MASTER d ON d.dept_id = c.dept_id
+INNER JOIN STRENGTH_MASTER s ON s.course_id = c.course_id AND s.dept_id = d.dept_id
+WHERE c.dept_id = did
+)
+LOOP
+dbms_output.put_line(CHR(9) || v_res.course_name || CHR(9) || v_res.MAX_STUD_ALLOW);
+END LOOP;
+dbms_output.put_line(CHR(10));
+END get_course_spots;
+
+FUNCTION spots_filled (v_did NUMBER, v_cid VARCHAR2) 
+RETURN INT IS
+spots INT;
+BEGIN
+SELECT COUNT(STUD_NO)
+INTO spots
+FROM STUDENT_DETAIL
+WHERE DEPT_ID = v_did AND COURSE_ID = v_cid;
+
+RETURN spots;
+END spots_filled;
+
+BEGIN
+dbms_output.put_line('pac_cursos:');
+END;
+
+DECLARE
+fs NUMBER;
+BEGIN
+pac_cursos.get_course_spots('COMPUTER SCIENCE');
+fs := pac_cursos.spots_filled(101, 'C0001');
+dbms_output.put_line(CHR(9) ||'Spots Filled: '||fs);
+END;
+
+
+-- 10 -- 10 -- 10 -- 10 -- 10 -- 10 -- 10 -- 10 -- 10 -- 10 -- 10 -- 10 
+-- Mismo caso del ejercicio 8 (en el cual ya implementé y solucioné), cualquier tabla en la que se esté ejecutando un UPDATE, INSERT o DELETE está "mutando", es decir,
+-- sus datos están cambiando y oracle no puede garantizar la consistencia de los datos que se soliciten y, por lo tanto, bloquea
+-- las operaciones que intenten hacer referencia a ella.
+-- No se debe confundir con un MUTEX, que es la estructura usada para realizar este bloqueo. (al detectar un UPDATE, INSERT o DELETE
+-- el sistema "activa" el mutex correspondiente a los recursos que se van a modificar, impidiendo que otros procesos tengan acceso a ese recurso)
+	
+
+
