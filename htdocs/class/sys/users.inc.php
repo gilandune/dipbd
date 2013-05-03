@@ -91,7 +91,7 @@ class User {
             throw new SysException($res['_error_msg']);
         }
 
-        $this->idsys_user   = $res['idsys_user'];
+        $this->idsys_user   = $res['cno'];
         $this->username     = $res['username'];
         $this->first_name   = $res['first_name'];
         $this->last_name    = $res['last_name'];
@@ -156,10 +156,10 @@ class User {
         }
 
         //inicia datos de sesión en base de datos
-        $idsys_session_log = User::initSession($check_login['idsys_user'], $ip, $sessionid);
+//        $idsys_session_log = User::initSession($check_login['idsys_user'], $ip, $sessionid);
 
         return array(
-            'idsys_user'        => $check_login['idsys_user'],
+            'idsys_user'        => $check_login['cno'],
             'idsys_session_log' => $idsys_session_log
         );
     }
@@ -174,7 +174,7 @@ class User {
         
         $db = new DB('Franquicias');
 
-        $sp = "CALL SP_Sys_User_checkLogin('$username');";
+        $sp = "CALL SP_User_checkLogin('$username');";
 
         $res = $db->queryRow($sp);
 

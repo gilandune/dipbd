@@ -17,13 +17,21 @@ if (!isset($_SESSION['idsys_user'])) {
 
 require_once dirname(__FILE__).'/general.sys.inc.php';
 
-$this_user = new User($_SESSION['idsys_user']);
-    
-$this_user->checkSession(session_id());
+//$this_user = new User($_SESSION['idsys_user']);
+//    
+//$this_user->checkSession(session_id());
 
 if (UNDER_MAINTENANCE) {
     header('Location: /logout.php');
 }
+
+$db = new DB('Franquicias');
+$sp = "CALL SP_Orders({$_SESSION['idsys_user']});";
+$res = $db->queryRow($sp);
+
+$db2 = new DB('Franquicias');
+$sp2 = "CALL SP_top_sales();";
+$res2 = $db2->queryAll($sp2);
 
 ?>
 
@@ -81,16 +89,187 @@ if (UNDER_MAINTENANCE) {
         <div id="maincontainer">
             <!-- header -->
             <div id="header">
-               test test test 
+                
             </div>
             <!-- content -->
             <div id="content">
-                test test test 
+                <div id="tabs">
+                    <ul>
+                        <li>
+                            <a href="#tabs-ordenes">
+                                <span class="adm_submenu_title">
+                                    Ordenes
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tabs-ventas">
+                                <span class="adm_submenu_title">
+                                    Ventas
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div id="tabs-ordenes">
+                        <table id="orders_table" class="altertable">
+                            <thead>
+                                <th>cliente</th>
+                                <th>ordenes recibidas</th>
+                                <th>ordenes enviadas</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><?php echo $res['cno']; ?></td>
+                                    <td><?php echo $res['received']; ?></td>
+                                    <td><?php echo $res['shipped']; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <br/>
+                        <div id="jqplot_global_id_cop_bars" style="height:300px; width:400px;"></div>
+                        
+                        <script type="text/javascript">
+                            $(document).ready(function(){
+                                var this_data3 = new Array();
+                                var this_ticks3 = new Array();
+
+                                this_data3.push('<?php echo $res['received']; ?>');
+                                this_data3.push('<?php echo $res['shipped']; ?>');
+
+                                this_ticks3.push('Recibidas');
+                                this_ticks3.push('Enviadas');
+
+                                $.jqplot.config.enablePlugins = true;
+
+                                plot3 = $.jqplot('jqplot_global_id_cop_bars', [this_data3], {
+                                    title: 'Ordenes',
+                                    animate: !$.jqplot.use_excanvas,
+
+                                    seriesDefaults:{
+                                        renderer:$.jqplot.BarRenderer,
+                                        pointLabels: { show: true },
+                                        rendererOptions: {
+                                            varyBarColor : true,
+                                            barDirection: 'vertical',
+                                            barMargin: 4,
+                                            barPadding: 4
+                                        }
+                                    },
+                                    axes: {
+                                        xaxis: {
+                                            renderer: $.jqplot.CategoryAxisRenderer,
+                                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                                            tickOptions:{ 
+                        //                        angle: -30,
+                                                fontSize: '10pt',
+                                                markSize:15
+                                            },
+                                            ticks: this_ticks3
+
+                                        },
+                                        yaxis: {min: 0, max: 5}
+                                    },
+                                    highlighter : { show: false },
+                                    cursor: {
+                                        show: false
+                                    }
+                                });
+                            });
+                        
+                        </script>
+                        
+                    </div>
+                    <div id="tabs-ventas">
+                        <table id="sales_table" class="altertable">
+                            <thead>
+                                <th>vendedor</th>
+                                <th>apellido</th>
+                                <th>monto</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><?php echo $res2[0]['eno']; ?></td>
+                                    <td><?php echo utf8_encode($res2[0]['ename']); ?></td>
+                                    <td><?php echo $res2[0]['sales']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo $res2[1]['eno']; ?></td>
+                                    <td><?php echo utf8_encode($res2[1]['ename']); ?></td>
+                                    <td><?php echo $res2[1]['sales']; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <br/>
+                        <div id="jqplot_global_sales_bars" style="height:300px; width:400px;"></div>
+                        
+                        <script type="text/javascript">
+                            $(document).ready(function(){
+                                var this_data4 = new Array();
+                                var this_ticks4 = new Array();
+
+                                this_data4.push('<?php echo $res2[0]['sales']; ?>');
+                                this_data4.push('<?php echo $res2[1]['sales']; ?>');
+
+                                this_ticks4.push('<?php echo utf8_encode($res2[0]['ename']); ?>');
+                                this_ticks4.push('<?php echo utf8_encode($res2[1]['ename']); ?>');
+
+                                $.jqplot.config.enablePlugins = true;
+
+                                plot4 = $.jqplot('jqplot_global_sales_bars', [this_data4], {
+                                    title: 'Ordenes',
+                                    animate: !$.jqplot.use_excanvas,
+
+                                    seriesDefaults:{
+                                        renderer:$.jqplot.BarRenderer,
+                                        pointLabels: { show: true },
+                                        rendererOptions: {
+                                            varyBarColor : true,
+                                            barDirection: 'vertical',
+                                            barMargin: 4,
+                                            barPadding: 4
+                                        }
+                                    },
+                                    axes: {
+                                        xaxis: {
+                                            renderer: $.jqplot.CategoryAxisRenderer,
+                                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                                            tickOptions:{ 
+                        //                        angle: -30,
+                                                fontSize: '10pt',
+                                                markSize:15
+                                            },
+                                            ticks: this_ticks4
+
+                                        },
+                                        yaxis: {min: 0, max: 300}
+                                    },
+                                    highlighter : { show: false },
+                                    cursor: {
+                                        show: false
+                                    }
+                                });
+                                
+                                $('#tabs').bind('tabsshow', function(event, ui) {
+                                    if (ui.index === 0 && plot3._drawCount === 0) {
+                                      plot3.replot();
+                                    }
+                                    else if (ui.index === 1 && plot4._drawCount === 0) {
+                                      plot4.replot();
+                                    }
+                                });
+                            });
+                        
+                        </script>
+                    </div>
+                </div>
             </div>
             <!-- footer -->
             <div id="footer">
                 
-                <span style="height: 50px; line-height: 50px;">test test test</span>
+                <span style="height: 50px; line-height: 50px;"></span>
             </div>
         </div>
         <div id="windows"></div>
