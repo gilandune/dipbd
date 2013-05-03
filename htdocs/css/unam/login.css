@@ -1,0 +1,122 @@
+/* 
+    Document   : login
+    Created on : 23/10/2012, 17:38:48 PM
+    Author     : reuhtte
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+body {
+    background: white;
+    text-align: center;
+    font-family: "arial";
+    font-size: 8pt;
+}
+
+body a, body a:link, body a:visited, body a:active {
+    text-decoration: none;
+}
+
+body img { border: none;}
+
+body input[type=text], body input[type=password] { border: 1px solid white; margin-bottom: 10px;}
+
+body textarea { border: 1px solid white;}
+
+div#header {
+    margin-top: 5%;
+}
+
+div#login_box {
+    background-color: #1D326F; 
+    color: white;
+    font-size: 1.2em;
+    margin: 10px 20px; 
+    padding: 10px 15px;
+    display: inline-block;
+    -moz-border-radius: 8px;
+    -webkit-border: 8px;
+    border-radius: 8px;
+    position: relative;
+}
+
+div#login_box div#login_box_title {
+    color: white;
+}
+
+
+div#login_box label.error {
+    position: absolute;
+    color: #a00101;
+    right: 10px;
+}
+
+
+input.button {
+    color: black;
+    background: #D4B400;
+    border: 0;
+    font-size: 1.2em;
+    /*text-shadow: 2px 2px 2px #ff6666;*/
+    padding: 10px 20px 10px 20px;
+    -moz-border-radius: 4px;
+    -webkit-border: 4px;
+    border-radius: 4px;
+    cursor: default;
+    -webkit-box-shadow: 3px 3px 2px #a00101; 
+    cursor: default;
+}
+
+
+.ext_msg
+{
+    display: inline-block;
+    color: #87C337;
+    cursor: pointer;
+}
+
+.ext_msg:hover {
+    
+    color: #1846d1;
+}
+
+div.leading_msg {
+    background: white;
+    font-size: 1em;
+    font-weight: bold;
+    color: #1846d1;
+    margin: 4px 2px;
+    padding: 3px 2px;
+    max-width: 300px;
+}
+
+/* MESSAGES */
+
+div#message div.window_msg {
+    /*background-color: white;*/
+    background-color: #1846d1;
+    color: white;
+    position: fixed;
+    display: inline;
+    /*color: green;*/
+    z-index:7;
+    box-shadow: -3px 3px 2px #0034d1;
+    -webkit-box-shadow: -3px 3px 2px #0034d1; /* Safari */
+    font-size: 1em;
+    /*text-shadow: 2px 2px 2px #fff;*/
+    padding: 10px 20px 4px 20px;
+    -moz-border-radius: 4px;
+    -webkit-border: 4px;
+    border-radius: 4px;
+    cursor: default;
+}
+
+#footer {
+    font-size: .9em;
+    color: #666;
+}
+
+a {
+    color: #BB6F04;
+}

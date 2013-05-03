@@ -29,7 +29,7 @@ div#header {
 }
 
 div#login_box {
-    background-color: #282828; 
+    background-color: #1D326F; 
     color: white;
     font-size: 1.2em;
     margin: 10px 20px; 
@@ -54,8 +54,8 @@ div#login_box label.error {
 
 
 input.button {
-    color: white;
-    background: #0000AC;
+    color: black;
+    background: #D4B400;
     border: 0;
     font-size: 1.2em;
     /*text-shadow: 2px 2px 2px #ff6666;*/
@@ -68,9 +68,6 @@ input.button {
     cursor: default;
 }
 
-input.button:hover {
-    background:  #e50e0e;
-}
 
 .ext_msg
 {

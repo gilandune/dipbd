@@ -265,9 +265,13 @@ $res2 = $db2->queryAll($sp2);
                     </div>
                     <div id="tabs-imagenes">
                         <div id="accordion_img">
-                            <h3>Script</h3>
+                            <h3>Scripts</h3>
                             <div>
-                                <a href ="/files/respuestas.txt" target="_self">Descargar</a>
+                                <a href ="/files/respuestas.txt" target="_self">Respuestas</a><br />
+                                <a href ="/files/reuhttec_gil.sql" target="_self">Script BD del sitio</a><br />
+                                Sourcecode del sitio: 
+                                &nbsp;&nbsp;&nbsp;&nbsp;<a href ="/files/dipbd.zip" target="_self">Local</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<a href ="https://github.com/gilandune/dipbd" target="_self">GitHub</a>
                             </div>
                             <h3>Pregunta 1</h3>
                             <div>
