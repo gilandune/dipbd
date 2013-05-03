@@ -56,14 +56,9 @@ $res2 = $db2->queryAll($sp2);
         <title>Diplomado Base de Datos</title>
         <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
-        <script type="text/javascript" src="js/jquery.slidePanel.min.js"></script>
         <script type="text/javascript" src="js/jquery.pnotify.min.js"></script>
-        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="js/jquery.dataTables.scroller.js"></script>
-        <script type="text/javascript" src="js/ColVis.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
         <script type="text/javascript" src="js/jquery.zclip.min.js"></script>
-        <script type="text/javascript" src="js/fileuploader.min.js"></script>
         <script type="text/javascript" src="js/jquery.treetable.js"></script>
         <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
         <script type="text/javascript" src="js/globalize.js"></script>
@@ -75,21 +70,18 @@ $res2 = $db2->queryAll($sp2);
         <script type="text/javascript" src="js/plugins/jqplot.highlighter.min.js"></script>
         <script type="text/javascript" src="js/plugins/jqplot.cursor.min.js"></script>
         <script class="include" type="text/javascript" src="js/plugins/jqplot.barRenderer.min.js"></script>
-        <script class="include" type="text/javascript" src="js/plugins/jqplot.pieRenderer.min.js"></script>
         <script class="include" type="text/javascript" src="js/plugins/jqplot.categoryAxisRenderer.min.js"></script>
         <script class="include" type="text/javascript" src="js/plugins/jqplot.pointLabels.min.js"></script>
         <script type="text/javascript" src="js/plugins/jqplot.meterGaugeRenderer.js"></script>
-        <script type="text/javascript" src="js/plugins/jqplot.logAxisRenderer.min.js"></script>
         <script type="text/javascript" src="js/plugins/jqplot.canvasTextRenderer.min.js"></script>
         <script type="text/javascript" src="js/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
         <script type="text/javascript" src="js/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jqplot.pieRenderer.min.js"></script>
     </head>
     <body>
         <div id="maincontainer">
             <!-- header -->
             <div id="header">
-                
+                <h2>Diplomado - Administración de Bases de Datos</h2>
             </div>
             <!-- content -->
             <div id="content">
@@ -112,7 +104,7 @@ $res2 = $db2->queryAll($sp2);
                         <li>
                             <a href="#tabs-imagenes">
                                 <span class="adm_submenu_title">
-                                    Imagenes
+                                    Respuestas
                                 </span>
                             </a>
                         </li>
@@ -226,7 +218,7 @@ $res2 = $db2->queryAll($sp2);
                                 $.jqplot.config.enablePlugins = true;
 
                                 plot4 = $.jqplot('jqplot_global_sales_bars', [this_data4], {
-                                    title: 'Ordenes',
+                                    title: 'Ventas',
                                     animate: !$.jqplot.use_excanvas,
 
                                     seriesDefaults:{
@@ -273,33 +265,203 @@ $res2 = $db2->queryAll($sp2);
                     </div>
                     <div id="tabs-imagenes">
                         <div id="accordion_img">
+                            <h3>Script</h3>
+                            <div>
+                                <a href ="/files/respuestas.txt" target="_self">Descargar</a>
+                            </div>
                             <h3>Pregunta 1</h3>
-                            <div><img src="/images/Selection_001.png"></div>
+                            <div>
+                                <pre>
+declare
+NON_NUM exception;
+pragma exception_init(NON_NUM, -06502);
+v_field_Delimiter varchar2(10) := 'a';
+begin
+        begin
+                v_field_Delimiter := to_number(v_field_Delimiter);
+                exception
+                when NON_NUM then
+                -- dbms_output.put_line('Not a number');
+                RAISE;
+        end;
+-- continue processing
+        dbms_output.put_line('Is a number');
+        exception
+        WHEN NON_NUM THEN dbms_output.put_line('External Not a number');
+end;
+                                </pre>
+                                <img src="/images/Selection_001.png">
+                            </div>
                             <h3>Pregunta 2</h3>
                             <div>
+                                <pre>
+CREATE OR REPLACE PROCEDURE agrega_empleo (
+	v_job_id jobs.job_id%TYPE,
+	v_job_title jobs.job_title%TYPE
+)
+IS
+	v_job_exists INT;
+	e_job_exists EXCEPTION;
+BEGIN
+	
+	SELECT COUNT(DISTINCT job_id)
+	INTO v_job_exists
+	FROM jobs
+	WHERE job_id = v_job_id;
+	
+	IF v_job_exists <> 0 THEN
+		RAISE e_job_exists;
+	ELSE
+		INSERT INTO jobs
+			(job_id, job_title) 
+		VALUES (v_job_id, v_job_title);
+	END IF;
+	
+	EXCEPTION
+		WHEN e_job_exists THEN
+		DBMS_OUTPUT.PUT_LINE ('Empleo ya existe.');
+END;
+
+BEGIN
+agrega_empleo('IT_DBA','Database Administrator');
+END;
+BEGIN
+agrega_empleo('IT_DBA','Database Administrator');
+END;
+                                </pre>
                                 <img src="/images/Selection_002.png"><br />
                                 <img src="/images/Selection_003.png"><br />
                                 <img src="/images/Selection_004.png"><br />
                             </div>
                             <h3>Pregunta 3</h3>
                             <div>
-                                <img src="/images/Selection_005.png">
+                                <pre>
+CREATE OR REPLACE FUNCTION obt_salanual_calc(
+	v_salario NUMBER,
+	v_comision NUMBER
+)
+RETURN NUMBER AS v_anual NUMBER(15,2);
+v_s NUMBER(10,2); v_c NUMBER(10,2);
+BEGIN
+
+IF v_salario IS NULL THEN v_s := 0;
+ELSE v_s := v_salario;
+END IF;
+IF v_comision IS NULL THEN v_c := 0;
+ELSE v_c := v_comision;
+END IF;
+
+v_anual := v_s*12 + v_s*v_c*12;
+
+RETURN v_anual;
+
+END;
+
+SELECT employee_id, obt_salanual_calc(salary,commission_pct) AS sa
+FROM employees
+WHERE department_id = 30;
+                                </pre>
+                                <img src="/images/Selection_005.png"><br />
                                 <img src="/images/Selection_006.png">
                             </div>
                             <h3>Pregunta 4</h3>
                             <div>
-                                <img src="/images/Selection_007.png">
-                                <img src="/images/Selection_008.png">
-                                <img src="/images/Selection_009.png">
-                                <img src="/images/Selection_010.png">
-                                <img src="/images/Selection_011.png">
-                                <img src="/images/Selection_012.png">
-                                <img src="/images/Selection_013.png">
+                                <pre>
+CREATE TABLE nuevo_empleado AS (
+	SELECT employee_id, last_name, salary, department_id, email, job_id, hire_date
+	FROM employees);
+	
+CREATE TABLE nuevo_departamento AS (
+	SELECT 	department_id, department_name, location_id
+	FROM departments);
+
+CREATE OR REPLACE VIEW detalles_empleado AS
+SELECT e.employee_id, e.last_name, e.salary, e.department_id, e.email, e.job_id, 
+	d.department_name, d.location_id
+FROM nuevo_empleado e
+INNER JOIN nuevo_departamento d ON d.department_id = e.department_id;
+
+	
+CREATE OR REPLACE TRIGGER nuevo_empleado_departamento
+INSTEAD OF INSERT ON detalles_empleado
+REFERENCING NEW AS n
+FOR EACH ROW
+DECLARE
+rowcnt number;
+BEGIN
+SELECT COUNT(*) INTO rowcnt FROM nuevo_departamento WHERE department_id = :n.department_id; 
+IF rowcnt = 0  THEN
+INSERT INTO nuevo_departamento (department_id, department_name, location_id) 
+VALUES (:n.department_id, :n.department_name, :n.location_id);
+ELSE
+UPDATE nuevo_departamento SET department_name = :n.department_name, location_id = :n.location_id
+WHERE department_id = :n.department_id;
+END IF; 
+SELECT COUNT(*) INTO rowcnt FROM nuevo_empleado WHERE employee_id = :n.employee_id;
+IF rowcnt = 0  THEN
+INSERT INTO nuevo_empleado (employee_id, last_name, salary, department_id, email, job_id) 
+VALUES (:n.employee_id, :n.last_name, :n.salary, :n.department_id, :n.email, :n.job_id);
+ELSE
+UPDATE nuevo_empleado SET last_name = :n.last_name, salary = :n.salary, department_id = :n.department_id, email = :n.email, job_id = :n.job_id
+WHERE employee_id = :n.employee_id;
+END IF;
+END;
+
+CREATE OR REPLACE TRIGGER borrar_empleado_departamento
+INSTEAD OF DELETE ON detalles_empleado
+FOR EACH ROW
+
+BEGIN
+
+	DELETE FROM nuevo_empleado WHERE employee_id = :OLD.employee_id;
+	DELETE FROM nuevo_departamento WHERE department_id = :OLD.department_id;
+	
+END;   
+
+DELETE FROM detalles_empleado WHERE employee_id = 206;
+                                </pre>
+                                <img src="/images/Selection_007.png"><br />
+                                <img src="/images/Selection_008.png"><br />
+                                <img src="/images/Selection_009.png"><br />
+                                <img src="/images/Selection_010.png"><br />
+                                <img src="/images/Selection_011.png"><br />
+                                <img src="/images/Selection_012.png"><br />
+                                <img src="/images/Selection_013.png"><br />
                                 <img src="/images/Selection_014.png">
                             </div>
                             <h3>Pregunta 5</h3>
                             <div>
-                                <img src="/images/Selection_015.png">
+                                <pre>
+CREATE OR REPLACE PROCEDURE top_sales (
+v_ini INT,
+v_fin INT
+)
+IS
+cnumber int;
+BEGIN
+dbms_output.put_line(CHR(9) || 'EmpNo' || CHR(9) || 'Name' || CHR(9) || 'Sales');
+FOR v_res IN (
+SELECT a.eno, a.ename, a.sales
+FROM (
+SELECT e.eno, e.ename, SUM(p.price*od.qty) AS sales, rank() over (order by SUM(p.price*od.qty) DESC) AS rnk FROM orders o
+INNER JOIN employees e ON e.eno = o.eno
+INNER JOIN odetails od ON od.ono = o.ono
+INNER JOIN parts p ON p.pno = od.pno
+GROUP BY e.eno, e.ename
+) a
+WHERE rnk BETWEEN v_ini AND v_fin
+ORDER BY a.sales DESC
+)
+LOOP
+dbms_output.put_line(CHR(9) || v_res.eno || CHR(9) || v_res.ename || CHR(9) || v_res.sales);
+END LOOP;
+END;
+
+BEGIN
+top_sales(1,3);
+END;
+                                </pre>
+                                <img src="/images/Selection_015.png"><br />
                                 <img src="/images/Selection_016.png">
                             </div>
                             <h3>Pregunta 7</h3>
@@ -311,17 +473,120 @@ $res2 = $db2->queryAll($sp2);
                             </div>
                             <h3>Pregunta 8</h3>
                             <div>
-                                <img src="/images/Selection_017.png">
-                                <img src="/images/Selection_018.png">
+                                <pre>
+-- El trigger del PDF nunca compiló, propongo esta alternativa:
+
+CREATE OR REPLACE TRIGGER verify_salary
+BEFORE INSERT OR UPDATE OF salary, job_id ON EMPLOYEES
+FOR EACH ROW
+DECLARE
+minsal NUMBER(8,2);
+maxsal NUMBER(8,2);
+e_i_sal EXCEPTION;
+BEGIN
+SELECT MIN(SALARY),MAX(SALARY)
+INTO minsal,maxsal
+FROM EMPLOYEES
+WHERE JOB_ID=:NEW.JOB_ID;
+IF :NEW.salary < minsal OR :new.salary > maxsal THEN
+RAISE e_i_sal;
+END IF;
+EXCEPTION
+WHEN e_i_sal THEN
+DBMS_OUTPUT.PUT_LINE ('Salario fuera de rango.');
+END;
+                                </pre>                                
+                                <pre>
+-- Con los cambios respectivos para corregir el problema:
+
+CREATE OR REPLACE TRIGGER verify_salary
+BEFORE INSERT OR UPDATE OF salary, job_id ON EMPLOYEES
+FOR EACH ROW
+DECLARE
+minsal NUMBER(8,2);
+maxsal NUMBER(8,2);
+e_i_sal EXCEPTION;
+BEGIN
+SELECT min_salary,max_salary
+INTO minsal,maxsal
+FROM JOBS
+WHERE JOB_ID=:NEW.JOB_ID;
+IF :NEW.salary < minsal OR :new.salary > maxsal THEN
+RAISE e_i_sal;
+END IF;
+EXCEPTION
+WHEN e_i_sal THEN
+DBMS_OUTPUT.PUT_LINE ('Salario fuera de rango.');
+END;
+                                </pre>
+                                <img src="/images/Selection_017.png"><br />
+                                <img src="/images/Selection_018.png"><br />
                                 <img src="/images/Selection_019.png">
                             </div>
                             <h3>Pregunta 9</h3>
                             <div>
-                                <img src="/images/Selection_020.png">
-                                <img src="/images/Selection_021.png">
+                                <pre>
+CREATE OR REPLACE PACKAGE pac_cursos AS
+p_spots NUMBER;
+PROCEDURE get_course_spots(v_dname VARCHAR2);
+FUNCTION spots_filled (v_did NUMBER, v_cid VARCHAR2) 
+RETURN INT;
+END pac_cursos;
+
+CREATE OR REPLACE PACKAGE BODY pac_cursos AS
+PROCEDURE get_course_spots(v_dname VARCHAR2) IS
+did NUMBER;
+
+BEGIN
+
+SELECT DEPT_ID
+INTO did
+FROM dept_master
+WHERE dept_name LIKE v_dname;
+
+dbms_output.put_line(CHR(9) || 'Course' || CHR(9) || 'Students Allowed');
+FOR v_res IN (
+SELECT d.dept_id, c.course_id, c.course_name, s.MAX_STUD_ALLOW
+FROM COURSE_MASTER c
+INNER JOIN DEPT_MASTER d ON d.dept_id = c.dept_id
+INNER JOIN STRENGTH_MASTER s ON s.course_id = c.course_id AND s.dept_id = d.dept_id
+WHERE c.dept_id = did
+)
+LOOP
+dbms_output.put_line(CHR(9) || v_res.course_name || CHR(9) || v_res.MAX_STUD_ALLOW);
+END LOOP;
+dbms_output.put_line(CHR(10));
+END get_course_spots;
+
+FUNCTION spots_filled (v_did NUMBER, v_cid VARCHAR2) 
+RETURN INT IS
+spots INT;
+BEGIN
+SELECT COUNT(STUD_NO)
+INTO spots
+FROM STUDENT_DETAIL
+WHERE DEPT_ID = v_did AND COURSE_ID = v_cid;
+
+RETURN spots;
+END spots_filled;
+
+BEGIN
+dbms_output.put_line('pac_cursos:');
+END;
+
+DECLARE
+fs NUMBER;
+BEGIN
+pac_cursos.get_course_spots('COMPUTER SCIENCE');
+fs := pac_cursos.spots_filled(101, 'C0001');
+dbms_output.put_line(CHR(9) ||'Spots Filled: '||fs);
+END;
+                                </pre>
+                                <img src="/images/Selection_020.png"><br />
+                                <img src="/images/Selection_021.png"><br />
                                 <img src="/images/Selection_022.png">
                             </div>
-                            <h3>Pregunta 7</h3>
+                            <h3>Pregunta 10</h3>
                             <div>
                                 <p>Mismo caso del ejercicio 8 (en el cual ya implementé y solucioné), cualquier tabla en la que se esté ejecutando un UPDATE, INSERT o DELETE está "mutando", es decir,
                                     <br />sus datos están cambiando y oracle no puede garantizar la consistencia de los datos que se soliciten y, por lo tanto, bloquea
@@ -333,10 +598,9 @@ $res2 = $db2->queryAll($sp2);
                     </div>
                     <script type="text/javascript">
                             $(document).ready(function(){
-                                    $('#accordion_ev_ha').bind('accordionchange', function(event, ui) {
-                                    var index = $(this).find("h3").index ( ui.newHeader[0] );
-                                    //alert(index);
-
+                                $('#accordion_img').accordion({
+                                    collapsible: true,
+                                    heightStyle: "content"
                                 });
                             }
                             );
@@ -345,8 +609,19 @@ $res2 = $db2->queryAll($sp2);
             </div>
             <!-- footer -->
             <div id="footer">
-                
-                <span style="height: 50px; line-height: 50px;"></span>
+                <ul class="main_header_right">
+                    <li class="main_header_opt">
+                        <span style="color:#ff6666;">Usuario:&nbsp;</span>
+                        <?php
+                            echo utf8_encode("{$_SESSION['idsys_user']}").'&nbsp;/&nbsp;'; 
+                        ?>
+                    </li>
+
+                    <li class="main_header_opt_h" onclick="$(location).attr('href','logout.php');">
+                        cerrar sesi&oacute;n
+                        <span class="ui-icon grey ui-icon-power" style="display: inline-block; vertical-align: middle; margin-top: -2px;">&nbsp;</span>
+                    </li>
+                </ul>
             </div>
         </div>
         <div id="windows"></div>
